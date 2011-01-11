@@ -5,21 +5,28 @@
 		return this;
 	};
 
-	// Variables
+	// Canvas vars
 	CanvasDemo.prototype.canvas = null;
 	CanvasDemo.prototype.canvasContext = null;
+
+	// Demo vars
+	CanvasDemo.prototype.truckImage = null;
+
 
 	// On Ready Callback
 	CanvasDemo.prototype.onReady = function(e)
 	{
 		this.canvas = this.createCanvas();
-		this.canvasContet = this.canvas.getContext('2d');
-		this.canvasContet.fillRect(100, 100, 50, 50);
+		this.canvasContext = this.canvas.getContext('2d');
+		this.canvasContext.fillRect(100, 100, 50, 50);
 
+		this.loadTruck();
+
+		// Start rendering loop
 		var self = this;
 		this.loopInterval = setInterval(function() {
 		 self.loop();
-		}, 30)
+		}, 30);
 	};
 
 	CanvasDemo.prototype.createCanvas = function()
@@ -34,10 +41,21 @@
 		return canvas;
 	};
 
+	CanvasDemo.prototype.loadTruck = function()
+	{
+		this.truckImage = new Image();
+		this.truckImage.src = "images/truck.png";
+
+		var self = this;
+		this.truckImage.onload = function() {
+			self.canvasContext.drawImage(self.truckImage, 100, 200, self.truckImage.width, self.truckImage.height);
+		};
+	};
+
 	// Loop
 	CanvasDemo.prototype.loop = function()
 	{
-		 console.log('hi')
+//		 console.log('hi')
 	};
 
 	// Create instnace
