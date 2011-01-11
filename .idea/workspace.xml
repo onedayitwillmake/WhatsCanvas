@@ -84,7 +84,16 @@
       <file leaf-file-name="main.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="8" selection-start="1190" selection-end="1190" vertical-scroll-proportion="0.776">
+            <state line="78" column="0" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.848">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HTML5.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="893" column="14" selection-start="13932" selection-end="13932" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -491,9 +500,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/lib/caat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="473" selection-start="50512" selection-end="50512" vertical-scroll-proportion="0.44779584">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="893" column="14" selection-start="13932" selection-end="13932" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="8" selection-start="1190" selection-end="1190" vertical-scroll-proportion="0.776">
+        <state line="78" column="0" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.848">
           <folding />
         </state>
       </provider>

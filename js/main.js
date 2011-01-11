@@ -18,9 +18,9 @@
 	{
 		this.canvas = this.createCanvas();
 		this.canvasContext = this.canvas.getContext('2d');
-		this.canvasContext.fillRect(100, 100, 50, 50);
+//		this.canvasContext.fillRect(100, 100, 50, 50);
 
-		this.loadTruck();
+//		this.drawTruck();
 
 		// Start rendering loop
 		var self = this;
@@ -41,21 +41,48 @@
 		return canvas;
 	};
 
-	CanvasDemo.prototype.loadTruck = function()
+	CanvasDemo.prototype.drawTruck = function()
 	{
-		this.truckImage = new Image();
-		this.truckImage.src = "images/truck.png";
+		if(!this.truckImage)
+		{
+			this.truckImage = new Image();
+			this.truckImage.src = "images/truck.png";
 
-		var self = this;
-		this.truckImage.onload = function() {
-			self.canvasContext.drawImage(self.truckImage, 100, 200, self.truckImage.width, self.truckImage.height);
-		};
+			var self = this;
+			this.truckImage.onload = function()
+			{
+				self.canvasContext.drawImage(self.truckImage, 100, 200, self.truckImage.width, self.truckImage.height);
+			};
+		}
 	};
+
+	CanvasDemo.prototype.drawRectangle = function()
+	{
+		var startX = 100;
+		var startY = 100;
+		var rectangleWidth = 150;
+		var rectangleHeight = 100;
+		var ctx = this.canvasContext;
+
+		ctx.fillStyle = "#FF00FF";
+//		ctx.fillStyle = "rgb(255, 0, 255)";
+		ctx.beginPath();
+		ctx.moveTo(startX, startY);
+		ctx.lineTo(startX + rectangleWidth, startY);
+		ctx.lineTo(startX + rectangleWidth, startY+rectangleHeight);
+		ctx.lineTo(startX, startY+rectangleHeight);
+		ctx.lineTo(startX, startY);
+		ctx.fill();
+		ctx.closePath();
+	};
+
 
 	// Loop
 	CanvasDemo.prototype.loop = function()
 	{
-//		 console.log('hi')
+		this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.drawRectangle();
+
 	};
 
 	// Create instnace
