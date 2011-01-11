@@ -56,16 +56,17 @@
 		}
 	};
 
+	var startX = 100;
 	CanvasDemo.prototype.drawRectangle = function()
 	{
-		var startX = 100;
+		startX += 4;
 		var startY = 100;
 		var rectangleWidth = 150;
 		var rectangleHeight = 100;
 		var ctx = this.canvasContext;
 
-		ctx.fillStyle = "#FF00FF";
-//		ctx.fillStyle = "rgb(255, 0, 255)";
+//		ctx.fillStyle = "#FF00FF";
+		ctx.fillStyle = "rgba(255, 0, 255, 0.02)";
 		ctx.beginPath();
 		ctx.moveTo(startX, startY);
 		ctx.lineTo(startX + rectangleWidth, startY);
@@ -80,9 +81,8 @@
 	// Loop
 	CanvasDemo.prototype.loop = function()
 	{
-		this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+//		this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.drawRectangle();
-
 	};
 
 	// Create instnace
