@@ -11,6 +11,8 @@
 
 	// Demo vars
 	CanvasDemo.prototype.truckImage = null;
+	CanvasDemo.prototype.mouseGrow = null;
+	CanvasDemo.prototype.mousePosition = null;
 
 
 	// On Ready Callback
@@ -18,9 +20,12 @@
 	{
 		this.canvas = this.createCanvas();
 		this.canvasContext = this.canvas.getContext('2d');
+//		this.canvasContext.globalCompositeOperation = "lighter";
 //		this.canvasContext.fillRect(100, 100, 50, 50);
-
 //		this.drawTruck();
+
+		this.initMouseEvents();
+		this.initMouseGrow();
 
 		// Start rendering loop
 		var self = this;
@@ -32,8 +37,8 @@
 	CanvasDemo.prototype.createCanvas = function()
 	{
 		var canvas = document.createElement('canvas');
-		canvas.width = 640;
-		canvas.height = 480;
+		canvas.width = 1000;
+		canvas.height = 1000;
 
 		var container = document.getElementById('container');
 		container.appendChild(canvas);
@@ -54,6 +59,36 @@
 				self.canvasContext.drawImage(self.truckImage, 100, 200, self.truckImage.width, self.truckImage.height);
 			};
 		}
+	};
+	CanvasDemo.prototype.initMouseGrow = function()
+	{
+		 this.mouseGrow = new EffectsMouseGrow();
+	};
+
+	CanvasDemo.prototype.initMouseEvents = function()
+	{
+		var that = this;
+		this.mousePosition = {x: this.canvas.width/2, y: this.canvas.height/2};
+
+		// Listen for resize
+		window.addEventListener("resize", function(e) {
+			var edge = 10;
+			that.canvas.width = window.innerWidth - edge*2;
+			that.canvas.height = window.innerHeight - edge*2;
+//			that.scene.setBounds(0, 0, that.director.canvas.width, that.director.canvas.height);
+		}, true);
+
+		// listen for the mouse
+		window.addEventListener("mousemove", function(e) {
+			that.mouseMove(e);
+		}, true);
+	};
+
+	CanvasDemo.prototype.mouseMove = function(e)
+	{
+		var mouseX = e.clientX;
+		var mouseY = e.clientY;
+		this.mousePosition = {x: mouseX, y: mouseY}
 	};
 
 	var startX = 100;
@@ -81,8 +116,12 @@
 	// Loop
 	CanvasDemo.prototype.loop = function()
 	{
-//		this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.drawRectangle();
+		this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.canvasContext.fillStyle = "#09f";
+    	this.canvasContext.fillRect(15,15,70,70);
+
+//		this.drawRectangle();
+		this.mouseGrow.onTick(this.canvasContext, this.mousePosition)
 	};
 
 	// Create instnace
