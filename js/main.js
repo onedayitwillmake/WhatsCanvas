@@ -3,6 +3,7 @@
 	 {
 		 var canvas = createCanvas();
 		 var context = canvas.getContext('2d');
+		 context.fillRect(100, 100, 50, 50);
 	 }
 
 	// Wait for when ready
