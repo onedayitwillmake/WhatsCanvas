@@ -1,69 +1,77 @@
-require(['lib/caat', 'lib/Stats'], function()
-{
-	require.ready(function()
-	{
-
-		var director = new CAAT.Director().initialize(900, 600);
-		initWithDirector(director);
-		// Insert canvas into HTML
-		$(director.canvas).appendTo(  $('body') );
-		director.loop(60);
-	})
-});
-
-function initWithDirector(director)
-{
-	var scene = new CAAT.Scene().create();
-
-	for(var i = 0; i < 50; i++)
-	{
-		var rectangleActor = new CAAT.ShapeActor().create();
-		rectangleActor.setShape( CAAT.ShapeActor.prototype.SHAPE_RECTANGLE ).
-				setLocation( Math.random() * director.canvas.width, Math.random() * director.canvas.height).
-				setSize(60,60).
-				setFillStyle('#ff00ff').
-				setStrokeStyle('#ff0000');
-
-
-		var scaleBehavior = animateInUsingScale(rectangleActor, Math.random() * 1000, 1200, Math.random() * 5, 0);
-		scaleBehavior.setCycle(true);
-		scaleBehavior.setPingPong(true);
-		scene.addChild(rectangleActor);
+(function() {
+	
+	// Let's self contain our demo within a CAATHelloWorld object
+	var CAATHelloWorld = function() {	
+		return this;
 	}
-
-	director.addScene(scene);
-}
-
-/**
- * Adds a CAAT.ScaleBehavior to the entity, used on animate in
- */
-function animateInUsingScale(actor, starTime, endTime, startScale, endScale)
-{
-   var scaleBehavior = new CAAT.ScaleBehavior();
-	scaleBehavior.anchor = CAAT.Actor.prototype.ANCHOR_CENTER;
-	actor.scaleX = actor.scaleY = scaleBehavior.startScaleX = scaleBehavior.startScaleY = startScale;  // Fall from the 'sky' !
-	scaleBehavior.endScaleX = scaleBehavior.endScaleY = endScale;
-	scaleBehavior.setFrameTime( starTime, endTime );
-	scaleBehavior.setCycle(false);
-	scaleBehavior.setInterpolator( new CAAT.Interpolator().createBounceOutInterpolator(false) );
-	actor.addBehavior(scaleBehavior);
-
-	return scaleBehavior;
-}
-
-/**
- * Adds a CAAT.ScaleBehavior to the entity, used on animate in
- */
-function animateInUsingAlpha(actor, starTime, endTime, startAlpha, endAlpha)
-{
-   var fadeBehavior = new CAAT.AlphaBehavior();
-	fadeBehavior.anchor = CAAT.Actor.prototype.ANCHOR_CENTER;
-	actor.alpha = fadeBehavior.startAlpha = startAlpha;
-	fadeBehavior.endAlpha = endAlpha;
-	fadeBehavior.setFrameTime( starTime, endTime );
-	fadeBehavior.setCycle(false);
-	fadeBehavior.setInterpolator( new CAAT.Interpolator().createExponentialOutInterpolator(2, false) );
-	actor.addBehavior(fadeBehavior);
-
-	return fadeBehavior;
-}
+	
+	CAATHelloWorld.prototype.create = function() 
+	{
+		// Create the director instance
+		var director = new CAAT.Director().initialize(600, 600);
+		// Create a scene, all directors must have at least one scene - this is where all your stuff goes
+		var scene = new CAAT.Scene();
+		scene.create();	// Notice we call create when creating this, and ShapeActor below. Both are Actors
+		scene.setFillStyle('#eeeeee');
+		director.addScene(scene); // Immediately add the scene once it's created
+		
+		// Make one single circle, and set some properties
+		var circle = new CAAT.ShapeActor(); // The ShapeActor constructor function does nothing interesting, simply returns 'this'
+		circle.create();	// The 'create' must be called after, in order to make the object
+		circle.setSize(60,60); // Set the width and hight of the circle
+		circle.setFillStyle('#ff00ff');
+		circle.setLocation(director.width*0.5, director.height*0.5); // Place in the center of the screen, use the director's width/height
+		
+		// Add it to the scene, if this is not done the circle will not be drawn
+		scene.addChild(circle);
+		
+		// Add the director to the document
+		document.getElementById('container').appendChild(director.canvas);
+		// Start the render loop, with at 60FPS
+		director.loop(60);
+		
+		// Every tick, the scene will call this function
+		var that = this; // Store a reference to a the 'CAATHelloWorld' instnace
+		scene.endAnimate = function(director,time) 
+		{
+			// Move the circle 1 pixel randomly up/down/left/right
+			circle.x += Math.random() * 2 - 1;
+			circle.y += Math.random() * 2 - 1;
+		}
+		
+	}
+	
+	/**
+	 * Stats
+	 * Create stats module, and attach to top left
+	 */
+	CAATHelloWorld.prototype.initStats = function()
+	{
+		var stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.left = '0px';
+		stats.domElement.style.top = '0px';
+		
+		// Update				
+		setInterval( function () {
+			stats.update();
+		}, 1000 / 30 );
+		
+		// Add to <div>
+		document.getElementById('container').appendChild(stats.domElement);
+	}
+	
+	
+	// Callback for when browse is ready
+	var onDocumentReady = function() {
+		// Create an instance of CAATHelloWorld
+		var helloWorldInstance = new CAATHelloWorld();
+		helloWorldInstance.create();
+		helloWorldInstance.initStats();
+		
+	}
+	
+	
+	// Listen for ready	
+	window.addEventListener('load', onDocumentReady, false);
+})();
